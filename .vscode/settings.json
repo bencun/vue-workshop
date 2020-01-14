@@ -12,5 +12,9 @@
 			"language": "javascript",
 			"autoFix": true
 		}
-	]
+	],
+	"eslint.autoFixOnSave": true,
+	"eslint.alwaysShowStatus": true,
+	"eslint.enable": true,
+	"eslint.run": "onType"
 }
