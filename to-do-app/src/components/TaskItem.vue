@@ -1,5 +1,5 @@
 <template>
-  <div class="task-item">
+  <div class="task-item" :class="taskItemClasses">
     <div class="task-item-content left-column" @click="toggleItem">
       <input type="checkbox" :checked="taskItem.completed">
       <span>{{taskItem.text}}</span>
@@ -32,6 +32,11 @@ export default {
       this.$emit('remove-item');
     },
   },
+  computed: {
+    taskItemClasses() {
+      return { 'completed-item': this.taskItem.completed };
+    },
+  },
 };
 </script>
 
@@ -48,6 +53,12 @@ export default {
   .task-item-buttons {
     display: flex;
     justify-content: center;
+  }
+
+  &.completed-item {
+    .task-item-content {
+      text-decoration: line-through;
+    }
   }
 }
 
