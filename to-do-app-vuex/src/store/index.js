@@ -1,34 +1,25 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import TasksStore from './tasks-store';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    tasks: [
-      { text: 'Buy some milk', completed: false },
-      { text: 'Fix the computer', completed: false },
-      { text: 'Uninstall Windows', completed: false },
-    ],
+    messageLog: [],
   },
   mutations: {
-    addTask(state, payload) {
-      state.tasks.push(payload);
-    },
-    removeTask(state, payload) {
-      state.tasks.splice(state.tasks.indexOf(payload), 1);
+    addLogEntry(state, message) {
+      state.messageLog.push(message);
     },
   },
   actions: {
     ADD_TASK(context, payload) {
-      context.commit('addTask', payload);
-    },
-  },
-  getters: {
-    unfinishedTasks(state) {
-      return state.tasks.filter(e => !e.completed);
+      console.log();
+      context.commit('addLogEntry', `ADD_TASK ${payload.text}`);
     },
   },
   modules: {
+    TasksStore,
   },
 });

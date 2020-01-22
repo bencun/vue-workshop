@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'TaskForm',
   data() {
@@ -21,13 +23,20 @@ export default {
     };
   },
   methods: {
+    // added only for mapactions demo
+    // !!!add namespace even later!!!
+    ...mapActions('TasksStore', {
+      addTaskAction: 'ADD_TASK',
+    }),
     addTask() {
       // add validation later!
       if (this.todoText.length === 0) {
         this.errorText = 'you must type in some text!';
       } else {
         // this.$emit('task-created', this.todoText);
-        this.$store.dispatch('ADD_TASK', { text: this.todoText, completed: false });
+        // comment out for mapAction demo
+        // this.$store.dispatch('ADD_TASK', { text: this.todoText, completed: false });
+        this.addTaskAction({ text: this.todoText, completed: false });
         this.todoText = '';
         this.errorText = '';
       }
