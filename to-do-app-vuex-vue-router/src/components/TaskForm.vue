@@ -5,7 +5,8 @@
       v-model="todoText" @keydown.enter="addTask">
     </div>
     <div class="right-column">
-      <button class="todo-add" @click="addTask">Add</button>
+      <button class="todo-add" v-if="taskId === 0" @click="addTask">Add</button>
+      <button class="todo-add" v-if="taskId > 0" @click="saveTask">Save</button>
     </div>
     <div class="error-container" v-if="errorText.length">Error: {{errorText}}</div>
   </div>
@@ -18,15 +19,33 @@ export default {
   name: 'TaskForm',
   data() {
     return {
+      taskId: 0,
       todoText: '',
       errorText: '',
     };
+  },
+  props: {
+    id: {
+      required: false,
+      type: [Number],
+      default: 0,
+    },
+  },
+  created() {
+    if (this.id > 0) {
+      this.taskId = this.id;
+      const todoItem = this.$store.state.TasksStore.tasks.find(e => e.id === this.taskId);
+      if (todoItem) {
+        this.todoText = todoItem.text;
+      }
+    }
   },
   methods: {
     // added only for mapactions demo
     // !!!add namespace even later!!!
     ...mapActions('TasksStore', {
       addTaskAction: 'ADD_TASK',
+      updateTaskAction: 'UPDATE_TASK',
     }),
     addTask() {
       // add validation later!
@@ -39,6 +58,17 @@ export default {
         this.addTaskAction({ text: this.todoText, completed: false });
         this.todoText = '';
         this.errorText = '';
+        this.$router.push('/home');
+      }
+    },
+    saveTask() {
+      if (this.todoText.length === 0) {
+        this.errorText = 'you must type in some text!';
+      } else {
+        this.updateTaskAction({ id: this.taskId, text: this.todoText, completed: false });
+        this.todoText = '';
+        this.errorText = '';
+        this.$router.push('/home');
       }
     },
   },

@@ -6,6 +6,7 @@
     </div>
     <div class="task-item-buttons right-column">
       <button @click="removeItem">X</button>
+      <router-link :to="`/home/edit/${taskItem.id}`" tag="button">E</router-link>
     </div>
   </div>
 </template>

@@ -2,22 +2,16 @@
   <div id="app">
     <div class="container">
       <h1>To-Do List</h1>
-      <TaskForm></TaskForm>
-      <TaskList></TaskList>
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
-import TaskForm from './components/TaskForm.vue';
-import TaskList from './components/TaskList.vue';
 
 export default {
   name: 'app',
-  components: {
-    TaskForm,
-    TaskList,
-  },
+  components: {},
 };
 </script>
 

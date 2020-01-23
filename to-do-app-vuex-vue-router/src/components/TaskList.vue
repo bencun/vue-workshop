@@ -1,8 +1,10 @@
 <template>
   <div class="task-list">
+    <TaskSearch></TaskSearch>
     <div class="task-list-filter">
       <input type="checkbox" id="filterTasks" v-model="unfinishedOnly">
       <label for="filterTasks">Show only the unfinished tasks</label>
+      <router-link to="/home/new" tag="button" class="new-button">Add New</router-link>
     </div>
 
     <TaskItem v-for="(task, idx) in tasks" :key="idx"
@@ -15,17 +17,25 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import TaskItem from './TaskItem.vue';
+import TaskSearch from './TaskSearch.vue';
 
 export default {
   name: 'TaskList',
   components: {
     TaskItem,
+    TaskSearch,
   },
   // add for getter demo
   data() {
     return {
       unfinishedOnly: false,
     };
+  },
+  props: {
+    searchString: {
+      type: String,
+      default: '',
+    },
   },
   methods: {
     // add for mapMutations demo
@@ -52,14 +62,20 @@ export default {
       unfinishedTasks: 'unfinishedTasks',
     }),
     tasks() {
+      let finalArray = [];
       if (!this.unfinishedOnly) {
-        // comment out for mapState demo
-        // return this.$store.state.tasks;
-        return this.tasksArray;
+        finalArray = this.tasksArray;
+      } else {
+        finalArray = this.unfinishedTasks;
       }
-      // comment out for mapGetters demo
-      // return this.$store.getters.unfinishedTasks;
-      return this.unfinishedTasks;
+
+      if (this.searchString.length > 0) {
+        finalArray = finalArray.filter(
+          e => e.text.toLowerCase().includes(this.searchString.toLowerCase()),
+        );
+      }
+
+      return finalArray;
     },
   },
 };
@@ -70,6 +86,10 @@ export default {
   .task-list-filter {
     width: 100%;
     text-align: center;
+
+    .new-button {
+      margin-left: 4px;
+    }
   }
 }
 </style>
