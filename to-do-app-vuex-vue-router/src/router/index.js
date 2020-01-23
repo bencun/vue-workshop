@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import TaskList from '../components/TaskList.vue';
 import TaskForm from '../components/TaskForm.vue';
 import MainContainer from '../layouts/MainContainer.vue';
+import TaskSearch from '../components/TaskSearch.vue';
 
 Vue.use(VueRouter);
 
@@ -19,13 +20,10 @@ const routes = [
         name: 'Home',
         components: {
           default: TaskList,
-          helper: false,
+          helper: TaskSearch,
         },
         props: {
-          default: (route) => {
-            console.log(route.query.sq);
-            return { searchString: route.query.sq };
-          },
+          default: route => ({ searchString: route.query.sq }),
           helper: false,
         },
       },

@@ -1,6 +1,5 @@
 <template>
   <div class="task-list">
-    <TaskSearch></TaskSearch>
     <div class="task-list-filter">
       <input type="checkbox" id="filterTasks" v-model="unfinishedOnly">
       <label for="filterTasks">Show only the unfinished tasks</label>
@@ -17,13 +16,11 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import TaskItem from './TaskItem.vue';
-import TaskSearch from './TaskSearch.vue';
 
 export default {
   name: 'TaskList',
   components: {
     TaskItem,
-    TaskSearch,
   },
   // add for getter demo
   data() {
