@@ -6,7 +6,7 @@
       <router-link to="/home/new" tag="button" class="new-button">Add New</router-link>
     </div>
 
-    <TaskItem v-for="(task, idx) in tasks" :key="idx"
+    <TaskItem v-for="task in tasks" :key="task.id"
     :taskItem="task" @remove-item="removeTask(task)"
     ></TaskItem>
 

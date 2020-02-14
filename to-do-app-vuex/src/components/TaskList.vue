@@ -5,7 +5,7 @@
       <label for="filterTasks">Show only the unfinished tasks</label>
     </div>
 
-    <TaskItem v-for="(task, idx) in tasks" :key="idx"
+    <TaskItem v-for="(task, idx) in tasks" :key="`${idx}${task.text}`"
     :taskItem="task" @remove-item="removeTask(task)"
     ></TaskItem>
 
